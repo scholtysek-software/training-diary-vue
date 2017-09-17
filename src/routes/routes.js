@@ -16,21 +16,16 @@ const routes = [
   {
     path: '/',
     component: DashboardLayout,
-    redirect: '/admin/overview'
-  },
-  {
-    path: '/admin',
-    component: DashboardLayout,
-    redirect: '/admin/stats',
+    redirect: '/overview',
     children: [
       {
         path: 'overview',
-        name: 'Trainings',
+        name: 'overview',
         component: Home
       },
       {
-        path: 'stats',
-        name: 'stats',
+        path: 'user',
+        name: 'user',
         component: UserProfile
       },
       {
@@ -54,8 +49,8 @@ const routes = [
         component: Typography
       },
       {
-        path: 'table-list',
-        name: 'table-list',
+        path: 'trainings',
+        name: 'trainings',
         component: TableList
       }
     ]

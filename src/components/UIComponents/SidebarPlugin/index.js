@@ -4,19 +4,19 @@ const SidebarStore = {
   showSidebar: false,
   sidebarLinks: [
     {
-      name: 'Trainings',
+      name: 'overview',
       icon: 'ti-clipboard',
-      path: '/admin/overview'
+      path: '/overview'
     },
     {
-      name: 'Training details',
+      name: 'Trainings',
       icon: 'ti-view-list-alt',
-      path: '/admin/table-list'
+      path: '/trainings'
     },
     {
       name: 'User profile',
       icon: 'ti-user',
-      path: '/admin/stats'
+      path: '/user'
     }
   ],
   displaySidebar (value) {
