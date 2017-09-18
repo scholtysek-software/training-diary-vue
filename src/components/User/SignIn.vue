@@ -100,7 +100,7 @@
 </script>
 <style>
   .sign-in {
-    background-image: url("../../../static/img/StockSnap_37CB0NNMNC.jpg");
+    background-image: url("/static/img/StockSnap_37CB0NNMNC.jpg");
     position: relative;
     background-position: center;
     background-repeat: no-repeat;
@@ -129,7 +129,7 @@
   .card label {
     font-weight: 700 !important;
     color: #252422 !important;
-    font-size: 15px !important  ;
+    font-size: 15px !important;
   }
 
   .content {
