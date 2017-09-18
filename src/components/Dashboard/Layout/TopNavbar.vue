@@ -11,6 +11,22 @@
         <a class="navbar-brand">{{routeName}}</a>
       </div>
       <div class="navbar-right-menu">
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <router-link to="#" class="btn-rotate">
+              <p>
+                Sign up
+              </p>
+            </router-link>
+            </li>
+          <li class="open">
+            <router-link to="sign-in" class="btn-rotate">
+              <p>
+                Sign in
+              </p>
+            </router-link>
+          </li>
+        </ul>
       </div>
     </div>
   </nav>
