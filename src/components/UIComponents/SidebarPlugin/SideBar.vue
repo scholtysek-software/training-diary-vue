@@ -1,5 +1,5 @@
 <template>
-  <div :class="sidebarClasses" :data-background-color="backgroundColor" :data-active-color="red">
+  <div :class="sidebarClasses" :data-background-color="backgroundColor" :data-active-color="activeColor">
     <!--
             Tip 1: you can change the color of the sidebar's background using: data-background-color="white | black | darkblue"
             Tip 2: you can change the color of the active button using the data-active-color="primary | info | success | warning | danger"
@@ -56,7 +56,7 @@
       },
       activeColor: {
         type: String,
-        default: 'success',
+        default: 'danger',
         validator: (value) => {
           let acceptedValues = ['primary', 'info', 'success', 'warning', 'danger']
           return acceptedValues.indexOf(value) !== -1
