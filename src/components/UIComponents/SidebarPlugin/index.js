@@ -1,4 +1,5 @@
 import Sidebar from './SideBar.vue'
+import UserResource from './../../../resources/user'
 
 const SidebarStore = {
   showSidebar: false,
@@ -6,17 +7,20 @@ const SidebarStore = {
     {
       name: 'overview',
       icon: 'ti-clipboard',
-      path: '/overview'
+      path: '/overview',
+      restrictedForLoggedIn: false
     },
     {
       name: 'Trainings',
       icon: 'ti-view-list-alt',
-      path: '/trainings'
+      path: '/trainings',
+      restrictedForLoggedIn: true
     },
     {
       name: 'User profile',
       icon: 'ti-user',
-      path: '/user'
+      path: '/user',
+      restrictedForLoggedIn: true
     }
   ],
   displaySidebar (value) {
@@ -30,7 +34,8 @@ const SidebarPlugin = {
     Vue.mixin({
       data () {
         return {
-          sidebarStore: SidebarStore
+          sidebarStore: SidebarStore,
+          user: UserResource.getUser()
         }
       }
     })

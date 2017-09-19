@@ -3,7 +3,7 @@
     <router-view></router-view>
     <!--This sidebar appears only for screens smaller than 992px-->
     <side-bar type="navbar" :sidebar-links="$sidebar.sidebarLinks">
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav" v-if="!user">
         <li>
           <router-link to="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="ti-user"></i>
@@ -23,7 +23,15 @@
 </template>
 
 <script>
-  export default {}
+  import UserResource from './resources/user'
+
+  export default {
+    data () {
+      return {
+        user: UserResource.getUser()
+      }
+    }
+  }
 </script>
 
 <style lang="scss"></style>

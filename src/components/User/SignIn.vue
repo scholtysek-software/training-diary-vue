@@ -107,19 +107,16 @@
     background-size: cover;
   }
 
-  .sign-in a {
+  .sign-in .footer .copyright a {
     color: #FFFFFF;
   }
+
   .full-page .content {
     min-height: calc(100vh - 70px);
   }
 
   .footer .copyright {
     color: #eeeeee;
-  }
-
-  .footer .copyright a {
-    color: #FFFFFF;
   }
 
   .card-header, .card-content {

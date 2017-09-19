@@ -12,19 +12,24 @@
       </div>
       <div class="navbar-right-menu">
         <ul class="nav navbar-nav navbar-right">
-          <li>
+          <li v-if="!user">
             <router-link to="#" class="btn-rotate">
               <p>
                 Sign up
               </p>
             </router-link>
             </li>
-          <li class="open">
+          <li class="open" v-if="!user">
             <router-link to="sign-in" class="btn-rotate">
               <p>
                 Sign in
               </p>
             </router-link>
+          </li>
+          <li class="open" v-if="user">
+            <a href="#">
+              <p>Signed in as: {{user.email}}</p>
+            </a>
           </li>
         </ul>
       </div>
@@ -32,6 +37,8 @@
   </nav>
 </template>
 <script>
+  import UserResource from './../../../resources/user'
+
   export default {
     computed: {
       routeName () {
@@ -41,7 +48,8 @@
     },
     data () {
       return {
-        activeNotifications: false
+        activeNotifications: false,
+        user: UserResource.getUser()
       }
     },
     methods: {
