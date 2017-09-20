@@ -26,30 +26,28 @@
               </p>
             </router-link>
           </li>
-          <li class="open" v-if="user">
-            <a href="#">
-              <p>Signed in as: {{user.email}}</p>
-            </a>
-          </li>
+          <drop-down :title="user.email" icon="ti-user" v-if="user">
+            <li @click.prevent="logout"><a href="#">Logout</a></li>
+          </drop-down>
         </ul>
       </div>
     </div>
   </nav>
 </template>
 <script>
-  import UserResource from './../../../resources/user'
-
   export default {
     computed: {
       routeName () {
         const {name} = this.$route
         return this.capitalizeFirstLetter(name)
+      },
+      user () {
+        return this.$store.getters.user
       }
     },
     data () {
       return {
-        activeNotifications: false,
-        user: UserResource.getUser()
+        activeNotifications: false
       }
     },
     methods: {
@@ -67,6 +65,9 @@
       },
       hideSidebar () {
         this.$sidebar.displaySidebar(false)
+      },
+      logout () {
+        this.$store.dispatch('logout')
       }
     }
   }

@@ -39,15 +39,17 @@
                       <div class="form-group">
                         <label>Email</label>
                         <input placeholder="Email" class="form-control input-no-border"
-                               type="email"></div>
+                               type="email" v-model="email">
+                      </div>
                       <div class="form-group">
                         <label>Password</label>
                         <input placeholder="Password"
                                class="form-control input-no-border"
-                               type="password"></div>
+                               type="password" v-model="password">
+                      </div>
                     </div>
                     <div class="card-footer text-center">
-                      <button type="submit" class="btn btn-fill btn-wd ">Sign in</button>
+                      <button type="submit" class="btn btn-fill btn-wd " @click.prevent="login">Sign in</button>
                       <div class="forgot">
                         <a href="#" class="">
                           Forgot your password?
@@ -75,9 +77,12 @@
     </div>
 </template>
 <script>
+
   export default {
     data () {
       return {
+        email: '',
+        password: '',
         year: new Date().getFullYear()
       }
     },
@@ -93,6 +98,14 @@
       },
       hideSidebar () {
         this.$sidebar.displaySidebar(false)
+      },
+      login () {
+        this.$store.dispatch('login', {
+          email: this.email,
+          password: this.password
+        }).then(() => {
+          this.$router.push('/')
+        })
       }
     }
   }

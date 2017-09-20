@@ -1,5 +1,4 @@
 import Sidebar from './SideBar.vue'
-import UserResource from './../../../resources/user'
 
 const SidebarStore = {
   showSidebar: false,
@@ -34,8 +33,7 @@ const SidebarPlugin = {
     Vue.mixin({
       data () {
         return {
-          sidebarStore: SidebarStore,
-          user: UserResource.getUser()
+          sidebarStore: SidebarStore
         }
       }
     })

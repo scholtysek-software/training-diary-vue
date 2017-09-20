@@ -84,6 +84,9 @@
           return 'nav navbar-nav'
         }
       },
+      user () {
+        return this.$store.getters.user
+      },
       /**
        * Styles to animate the arrow near the current active sidebar link
        * @returns {{transform: string}}
