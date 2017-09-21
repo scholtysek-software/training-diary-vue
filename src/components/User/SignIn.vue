@@ -41,18 +41,20 @@
                     <div class="card-content">
                       <div class="form-group">
                         <label>Email</label>
-                        <input placeholder="Email" class="form-control input-no-border"
-                               type="email" v-model="email">
+                        <input placeholder="Email" :class="{ 'form-control': true, 'input-no-border': true, 'is-error': errors.has('email') }"
+                               type="email" v-model="email" v-validate="'required|email'" name="email">
+                        <span v-show="errors.has('email')" class="text-danger">{{ errors.first('email') }}</span>
                       </div>
                       <div class="form-group">
                         <label>Password</label>
                         <input placeholder="Password"
-                               class="form-control input-no-border"
-                               type="password" v-model="password">
+                               :class="{ 'form-control': true, 'input-no-border': true, 'is-error': errors.has('password') }"
+                               type="password" v-model="password" name="password" v-validate="'required'">
+                        <span v-show="errors.has('password')" class="text-danger">{{ errors.first('password') }}</span>
                       </div>
                     </div>
                     <div class="card-footer text-center">
-                      <button type="submit" class="btn btn-fill btn-wd " @click.prevent="login">Sign in</button>
+                      <button type="submit" class="btn btn-fill btn-wd " :disabled="!email || !password || errors.has('email') || errors.has('password')" @click.prevent="login">Sign in</button>
                       <div class="forgot">
                         <a href="#" class="">
                           Forgot your password?
@@ -106,11 +108,18 @@
         this.$store.dispatch('login', {
           email: this.email,
           password: this.password
-        }).then(() => {
+        }).then((user) => {
+          this.$notifications.notify(
+            {
+              id: Date.now(),
+              message: `Hi, ${user.email}`,
+              horizontalAlign: 'center',
+              verticalAlign: 'top',
+              type: 'success'
+            })
           this.$router.push('/')
         }).catch(error => {
           if (error.response && error.response.status === 400) {
-            console.log('invalid credentials')
             this.$notifications.notify(
               {
                 id: Date.now(),
@@ -189,6 +198,14 @@
 
   .forgot a {
     color: #165265;
+  }
+
+  .sign-in .form-control {
+    background-color: #F3F2EE;
+  }
+
+  .sign-in .is-error {
+    border: 1px solid #B33C12;
   }
 
 </style>

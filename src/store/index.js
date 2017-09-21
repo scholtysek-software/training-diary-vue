@@ -34,7 +34,7 @@ export default new Vuex.Store({
             this.state.user = user
             this.state.token = token
             commit(types.LOGIN_SUCCESS)
-            resolve()
+            resolve(user)
           })
           .catch(error => reject(error))
       })
