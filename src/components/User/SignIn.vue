@@ -4,6 +4,9 @@
     <div>
     <nav class="navbar navbar-transparent navbar-absolute">
       <div class="container">
+        <notifications>
+
+        </notifications>
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" :class="{toggled: $sidebar.showSidebar}" @click="toggleSidebar">
             <span class="sr-only">Toggle navigation</span>
@@ -105,6 +108,28 @@
           password: this.password
         }).then(() => {
           this.$router.push('/')
+        }).catch(error => {
+          if (error.response && error.response.status === 400) {
+            console.log('invalid credentials')
+            this.$notifications.notify(
+              {
+                id: Date.now(),
+                message: 'You have entered incorrect email or password',
+                horizontalAlign: 'center',
+                verticalAlign: 'top',
+                type: 'danger'
+              })
+            return
+          }
+
+          this.$notifications.notify(
+            {
+              id: Date.now(),
+              message: error.message,
+              horizontalAlign: 'center',
+              verticalAlign: 'top',
+              type: 'danger'
+            })
         })
       }
     }

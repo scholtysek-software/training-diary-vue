@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import * as types from './mutations'
+import UserResource from './../resources/user'
 
 Vue.use(Vuex)
 
@@ -16,9 +17,6 @@ export default new Vuex.Store({
     [types.LOGIN_SUCCESS] (state) {
       state.isLoggedIn = true
       state.pending = false
-      state.user = {
-        email: 'test@test.com'
-      }
     },
     [types.LOGOUT] (state) {
       state.isLoggedIn = false
@@ -28,16 +26,22 @@ export default new Vuex.Store({
   actions: {
     login ({ commit }, creds) {
       commit(types.LOGIN) // show spinner
-      return new Promise(resolve => {
-        setTimeout(() => {
-          localStorage.setItem('token', 'JWT')
-          commit(types.LOGIN_SUCCESS)
-          resolve()
-        }, 1000)
+      return new Promise((resolve, reject) => {
+        UserResource.login(creds.email, creds.password)
+          .then(({ user, token }) => {
+            localStorage.setItem('user', user)
+            localStorage.setItem('token', token)
+            this.state.user = user
+            this.state.token = token
+            commit(types.LOGIN_SUCCESS)
+            resolve()
+          })
+          .catch(error => reject(error))
       })
     },
     logout ({ commit }) {
       localStorage.removeItem('token')
+      localStorage.removeItem('user')
       commit(types.LOGOUT)
     }
   },
