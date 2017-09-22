@@ -5,7 +5,7 @@
     <side-bar type="navbar" :sidebar-links="$sidebar.sidebarLinks">
       <ul class="nav navbar-nav">
         <li v-if="!user">
-          <router-link to="#" class="dropdown-toggle" data-toggle="dropdown">
+          <router-link to="sign-up" class="dropdown-toggle" data-toggle="dropdown">
               <i class="ti-user"></i>
               <p>Sign up</p>
           </router-link>

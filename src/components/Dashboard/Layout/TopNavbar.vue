@@ -13,7 +13,7 @@
       <div class="navbar-right-menu">
         <ul class="nav navbar-nav navbar-right">
           <li v-if="!user">
-            <router-link to="#" class="btn-rotate">
+            <router-link to="sign-up" class="btn-rotate">
               <p>
                 Sign up
               </p>

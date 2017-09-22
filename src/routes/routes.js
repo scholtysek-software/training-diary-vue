@@ -7,12 +7,18 @@ import Home from 'src/components/Dashboard/Views/Home.vue'
 import UserProfile from 'src/components/Dashboard/Views/UserProfile.vue'
 import TableList from 'src/components/Dashboard/Views/TableList.vue'
 import SignIn from 'src/components/User/SignIn.vue'
+import SignUp from 'src/components/User/SignUp.vue'
 
 const routes = [
   {
     path: '/sign-in',
     name: 'Sign In',
     component: SignIn
+  },
+  {
+    path: '/sign-up',
+    name: 'Sign Up',
+    component: SignUp
   },
   {
     path: '/',

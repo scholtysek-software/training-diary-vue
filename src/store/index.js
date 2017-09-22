@@ -8,7 +8,9 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     isLoggedIn: !!localStorage.getItem('token'),
-    user: localStorage.getItem('user')
+    user: {
+      email: localStorage.getItem('user')
+    }
   },
   mutations: {
     [types.LOGIN] (state) {
@@ -24,12 +26,27 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    register ({ commit }, creds) {
+      commit(types.LOGIN) // show spinner
+      return new Promise((resolve, reject) => {
+        UserResource.register(creds.email, creds.password)
+          .then(({ user, token }) => {
+            localStorage.setItem('user', user.email)
+            localStorage.setItem('token', token)
+            this.state.user = user
+            this.state.token = token
+            commit(types.LOGIN_SUCCESS)
+            resolve(user)
+          })
+          .catch(error => reject(error))
+      })
+    },
     login ({ commit }, creds) {
       commit(types.LOGIN) // show spinner
       return new Promise((resolve, reject) => {
         UserResource.login(creds.email, creds.password)
           .then(({ user, token }) => {
-            localStorage.setItem('user', user)
+            localStorage.setItem('user', user.email)
             localStorage.setItem('token', token)
             this.state.user = user
             this.state.token = token
