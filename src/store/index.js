@@ -5,12 +5,21 @@ import UserResource from './../resources/user'
 
 Vue.use(Vuex)
 
+const getUser = () => {
+  const email = localStorage.getItem('user')
+  if (email) {
+    return {
+      email: localStorage.getItem('user')
+    }
+  }
+
+  return null
+}
+
 export default new Vuex.Store({
   state: {
     isLoggedIn: !!localStorage.getItem('token'),
-    user: {
-      email: localStorage.getItem('user')
-    }
+    user: getUser()
   },
   mutations: {
     [types.LOGIN] (state) {
