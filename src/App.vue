@@ -17,10 +17,19 @@
           </router-link>
         </li>
         <li v-if="user">
-          <a href="#" @click.prevent="logout">
-            <i class="ti-user"></i>
-            <p>Sign out</p>
-          </a>
+            <div class="user">
+              <div class="photo logo-img">
+                <img class="avatar" src="static/img/faces/face-2.jpg">
+              </div>
+              <p>{{ user.email }}</p>
+              <a href="#" @click.prevent="logout">
+                <p><span class="sidebar-letter-icon">SO</span> Sign out</p>
+              </a>
+            </div>
+
+        </li>
+        <li v-if="user">
+
         </li>
         <li class="divider"></li>
       </ul>
@@ -46,4 +55,58 @@
   }
 </script>
 
-<style lang="scss"></style>
+<style>
+  .photo {
+    width: 34px;
+    height: 34px;
+    overflow: hidden;
+    float: left;
+    margin-right: 11px;
+    z-index: 5;
+    border-radius: 50%;
+  }
+
+  .photo img {
+    width: 100%;
+  }
+
+  .user p {
+    opacity: 1;
+    line-height: 22px;
+    display: block;
+    position: relative;
+    text-transform: none !important;
+    color: #BDBDB7;
+    font-weight: 200 !important;
+  }
+
+  .user a :hover {
+    color: #FFF;
+  }
+
+  .sidebar-letter-icon {
+    margin-left: -8px;
+    margin-right: 10px;
+  }
+</style>
+<div class="user">
+  <div class="photo"><img src="static/img/faces/face-2.jpg"></div>
+  <div class="info">
+    <a data-toggle="collapse" href="javascript:void(0)">
+      <span>Chet Faker<b class="caret"></b></span>
+    </a>
+    <div class="clearfix"></div>
+    <div>
+      <ul class="nav" style="" data-old-padding-top="" data-old-padding-bottom="" data-old-overflow="">
+        <li><a href="javascript:void(0)">
+          <span class="sidebar-mini">Mp</span>
+          <span
+          class="sidebar-normal">My Profile</span></a></li>
+        <!--<li><a href="javascript:void(0)"><span class="sidebar-mini">Ep</span> <span-->
+          <!--class="sidebar-normal">Edit Profile</span></a></li>-->
+        <!--<li><a href="javascript:void(0)"><span class="sidebar-mini">S</span> <span-->
+          <!--class="sidebar-normal">Settings</span></a></li>-->
+      </ul>
+    </div>
+  </div>
+</div>
