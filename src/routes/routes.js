@@ -2,10 +2,10 @@ import DashboardLayout from '../components/Dashboard/Layout/DashboardLayout.vue'
 // GeneralViews
 import NotFound from '../components/GeneralViews/NotFoundPage.vue'
 
-// Admin pages
+// Pages
 import Home from 'src/components/Dashboard/Views/Home.vue'
 import UserProfile from 'src/components/Dashboard/Views/UserProfile.vue'
-import TableList from 'src/components/Dashboard/Views/TableList.vue'
+import Trainings from 'src/components/Dashboard/Views/Trainings.vue'
 import SignIn from 'src/components/User/SignIn.vue'
 import SignUp from 'src/components/User/SignUp.vue'
 
@@ -38,7 +38,7 @@ const routes = [
       {
         path: 'trainings',
         name: 'trainings',
-        component: TableList
+        component: Trainings
       }
     ]
   },
