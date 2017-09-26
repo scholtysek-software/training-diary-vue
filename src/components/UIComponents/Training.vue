@@ -2,31 +2,34 @@
   <div>
     <div class="header">
       <slot name="header">
-        <h4 class="title">{{title}}</h4>
-        <p class="category">{{subTitle}}</p>
+        <h4 class="title">{{ displayDate(training.date) }}</h4>
+        <p class="category">You are awesome</p>
       </slot>
     </div>
     <div class="content table-responsive table-full-width">
       <table class="table" :class="tableClass">
         <thead>
-          <th>Exercise</th>
-          <th>Series 1</th>
-          <th>Series 2</th>
-          <th>Series 3</th>
-          <th>Series 4</th>
-          <th>Series 5</th>
-          <th>Series 6</th>
+          <tr>
+            <th>Exercise</th>
+            <th v-for="seriesNo in maxSeries">Series {{seriesNo}}</th>
+          </tr>
         </thead>
         <tbody>
-          <tr v-for="item in data">
-            <td>Exercise name</td>
-            <td v-for="column in [0, 1, 2, 3, 4, 5]">
-              <i class="material-icons md-12">replay</i> 12
+          <tr v-for="exercise in training.exercises">
+            <td>{{ exercise.name }}</td>
+            <td v-for="series in exercise.series">
+              <i class="material-icons md-12" title="Reps">replay</i>
+              <span title="Reps">{{series.repetition}}</span>
               <svg width="5" height="23">
-                <line x1="0" y1="100%" x2="100%" y2="0"/>
+                <line x1="0" y1="100%" x2="100%" y2="0"></line>
               </svg>
-              <i class="material-icons md-12">fitness_center</i> 23
+              <i class="material-icons md-12" title="Weight">fitness_center</i>
+              <span title="Weight">{{series.load}}</span>
             </td>
+            <td v-for="item in new Array(maxSeries.length - exercise.series.length)"> - </td>
+          </tr>
+          <tr>
+            <td v-for="item in new Array(maxSeries.length + 1)"></td>
           </tr>
         </tbody>
       </table>
@@ -34,10 +37,12 @@
   </div>
 </template>
 <script>
+  import moment from 'moment'
+
   export default {
     props: {
       columns: Array,
-      data: Array,
+      training: Object,
       type: {
         type: String, // striped | hover
         default: 'Striped'
@@ -52,17 +57,25 @@
 
       }
     },
+    methods: {
+      displayDate (timestamp) {
+        return moment(timestamp).format('LL')
+      }
+    },
     computed: {
       tableClass () {
         return `table-${this.type}`
-      }
-    },
-    methods: {
-      hasValue (item, column) {
-        return item[column.toLowerCase()] !== 'undefined'
       },
-      itemValue (item, column) {
-        return item[column.toLowerCase()]
+      maxSeries () {
+        const exercisesLength = this.training.exercises.map(ex => ex.series.length)
+        const max = Math.max(...exercisesLength)
+        const maxSeries = []
+
+        for (let i = 1; i <= max; i += 1) {
+          maxSeries.push(i)
+        }
+
+        return maxSeries
       }
     }
   }

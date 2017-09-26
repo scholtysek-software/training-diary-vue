@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import * as types from './mutations'
 import UserResource from './../resources/user'
+import TrainingResource from './../resources/training'
 
 Vue.use(Vuex)
 
@@ -16,10 +17,20 @@ const getUser = () => {
   return null
 }
 
+const getTrainings = () => {
+  if (localStorage.getItem('trainings')) {
+    return JSON.parse(localStorage.getItem('trainings'))
+  }
+
+  return []
+}
+
 export default new Vuex.Store({
   state: {
     isLoggedIn: !!localStorage.getItem('token'),
-    user: getUser()
+    token: localStorage.getItem('token'),
+    user: getUser(),
+    trainings: getTrainings()
   },
   mutations: {
     [types.LOGIN] (state) {
@@ -69,6 +80,16 @@ export default new Vuex.Store({
       localStorage.removeItem('token')
       localStorage.removeItem('user')
       commit(types.LOGOUT)
+    },
+    getTrainings ({ commit }) {
+      return new Promise((resolve, reject) => {
+        TrainingResource.getTrainings(this.state.token)
+          .then(trainings => {
+            localStorage.setItem('trainings', JSON.stringify(trainings))
+            resolve(trainings)
+          })
+          .catch(error => reject(error))
+      })
     }
   },
   getters: {
@@ -77,6 +98,12 @@ export default new Vuex.Store({
     },
     user: state => {
       return state.user
+    },
+    token: state => {
+      return state.token
+    },
+    trainings: state => {
+      return state.trainings
     }
   }
 })
