@@ -43,6 +43,8 @@ export default new Vuex.Store({
     [types.LOGOUT] (state) {
       state.isLoggedIn = false
       state.user = null
+      state.trainings = []
+      state.token = null
     }
   },
   actions: {
@@ -79,6 +81,7 @@ export default new Vuex.Store({
     logout ({ commit }) {
       localStorage.removeItem('token')
       localStorage.removeItem('user')
+      localStorage.removeItem('trainings')
       commit(types.LOGOUT)
     },
     getTrainings ({ commit }) {
@@ -86,6 +89,7 @@ export default new Vuex.Store({
         TrainingResource.getTrainings(this.state.token)
           .then(trainings => {
             localStorage.setItem('trainings', JSON.stringify(trainings))
+            this.state.trainings = trainings
             resolve(trainings)
           })
           .catch(error => reject(error))
