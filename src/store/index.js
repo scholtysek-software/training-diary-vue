@@ -79,10 +79,17 @@ export default new Vuex.Store({
       })
     },
     logout ({ commit }) {
-      localStorage.removeItem('token')
-      localStorage.removeItem('user')
-      localStorage.removeItem('trainings')
-      commit(types.LOGOUT)
+      return new Promise((resolve, reject) => {
+        UserResource.logout(this.state.token)
+          .then(() => {
+            localStorage.removeItem('token')
+            localStorage.removeItem('user')
+            localStorage.removeItem('trainings')
+            commit(types.LOGOUT)
+            resolve()
+          })
+          .catch(error => reject(error))
+      })
     },
     getTrainings ({ commit }) {
       return new Promise((resolve, reject) => {

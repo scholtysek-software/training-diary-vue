@@ -52,7 +52,21 @@ const register = (email, password) => {
   })
 }
 
+const logout = (token) => {
+  return new Promise((resolve, reject) => {
+    axios({
+      url: url + '/api/users/me/token',
+      method: 'delete',
+      headers: {
+        'x-auth': token
+      }
+    }).then(response => resolve())
+      .catch(error => reject(error))
+  })
+}
+
 export default {
   login,
-  register
+  register,
+  logout
 }
