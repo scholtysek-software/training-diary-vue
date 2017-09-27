@@ -30,7 +30,8 @@ export default new Vuex.Store({
     isLoggedIn: !!localStorage.getItem('token'),
     token: localStorage.getItem('token'),
     user: getUser(),
-    trainings: getTrainings()
+    trainings: getTrainings(),
+    trainingToDisplay: 0
   },
   mutations: {
     [types.LOGIN] (state) {
@@ -45,6 +46,15 @@ export default new Vuex.Store({
       state.user = null
       state.trainings = []
       state.token = null
+    },
+    [types.TRAININGS] (state, trainings) {
+      state.trainings = trainings
+    },
+    [types.NEXT_TRAINING] (state) {
+      state.trainingToDisplay++
+    },
+    [types.PREVIOUS_TRAINING] (state) {
+      state.trainingToDisplay--
     }
   },
   actions: {
@@ -96,7 +106,7 @@ export default new Vuex.Store({
         TrainingResource.getTrainings(this.state.token)
           .then(trainings => {
             localStorage.setItem('trainings', JSON.stringify(trainings))
-            this.state.trainings = trainings
+            commit(types.TRAININGS, trainings)
             resolve(trainings)
           })
           .catch(error => reject(error))
@@ -115,6 +125,9 @@ export default new Vuex.Store({
     },
     trainings: state => {
       return state.trainings
+    },
+    trainingToDisplay: state => {
+      return state.trainingToDisplay
     }
   }
 })

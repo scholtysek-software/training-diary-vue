@@ -59,7 +59,7 @@
     },
     methods: {
       displayDate (timestamp) {
-        return moment(timestamp).format('LL')
+        return moment.unix(timestamp).format('LL')
       }
     },
     computed: {

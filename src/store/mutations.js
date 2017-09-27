@@ -1,3 +1,6 @@
 export const LOGIN = 'LOGIN'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGOUT = 'LOGOUT'
+export const TRAININGS = 'TRAININGS'
+export const NEXT_TRAINING = 'NEXT_TRAINING'
+export const PREVIOUS_TRAINING = 'PREVIOUS_TRAINING'
