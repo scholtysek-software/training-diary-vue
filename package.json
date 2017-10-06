@@ -17,6 +17,7 @@
     "bootstrap": "^3.3.7",
     "chartist": "^0.10.1",
     "moment": "2.18.1",
+    "sweet-modal-vue": "github:scholtysek-software/sweet-modal-vue",
     "v-click-outside": "0.0.8",
     "vee-validate": "^2.0.0-rc.17",
     "vue": "^2.3.0",

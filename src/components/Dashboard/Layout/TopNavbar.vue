@@ -26,16 +26,28 @@
               </p>
             </router-link>
           </li>
+          <li v-if="user">
+            <a href="#" @click.prevent="openTrainingModal">
+              <i class="ti-plus"></i>
+              <p>New training</p>
+            </a>
+          </li>
           <drop-down :title="user.email" icon="ti-user" v-if="user">
             <li @click.prevent="logout"><a href="#">Logout</a></li>
           </drop-down>
         </ul>
       </div>
     </div>
+    <create-training></create-training>
   </nav>
 </template>
 <script>
+  import CreateTraining from './../../UIComponents/CreateTraining.vue'
+
   export default {
+    components: {
+      CreateTraining
+    },
     computed: {
       routeName () {
         const {name} = this.$route
@@ -71,6 +83,9 @@
           .then(() => {
             this.$router.push('/')
           })
+      },
+      openTrainingModal () {
+        this.$store.commit('OPEN_CREATE_TRAINING_MODAL')
       }
     }
   }
