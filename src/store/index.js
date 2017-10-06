@@ -57,6 +57,12 @@ export default new Vuex.Store({
     [types.PREVIOUS_TRAINING] (state) {
       state.trainingToDisplay--
     },
+    [types.FIRST_TRAINING] (state) {
+      state.trainingToDisplay = 0
+    },
+    [types.LAST_TRAINING] (state) {
+      state.trainingToDisplay = state.trainings.length - 1
+    },
     [types.OPEN_CREATE_TRAINING_MODAL] (state) {
       state.isOpenCreateTrainingModal = true
     },

@@ -2,8 +2,10 @@
   <div>
     <div class="row trainings-nav">
       <div class="col-md-12">
-        <button class="btn btn-fill btn-wd" @click="previousTraining" :disabled="!hasPreviousTraining"><i class="ti-arrow-left"></i></button>
-        <button class="btn btn-fill btn-wd pull-right" @click="nextTraining" :disabled="!hasNextTraining"><i class="ti-arrow-right"></i></button>
+        <button class="btn btn-fill" @click="firstTraining" :disabled="isFirstTraining">First</button>
+        <button class="btn btn-fill" @click="previousTraining" :disabled="!hasPreviousTraining"><i class="ti-arrow-left"></i></button>
+        <button class="btn btn-fill pull-right" @click="lastTraining" :disabled="isLastTraining">Last</button>
+        <button class="btn btn-fill pull-right" style="margin-right: 5px" @click="nextTraining" :disabled="!hasNextTraining"><i class="ti-arrow-right"></i></button>
       </div>
     </div>
     <div class="row">
@@ -46,6 +48,12 @@
       },
       hasNextTraining () {
         return this.trainings[this.$store.getters.trainingToDisplay + 1] !== undefined
+      },
+      isFirstTraining () {
+        return this.$store.getters.trainingToDisplay === 0
+      },
+      isLastTraining () {
+        return this.$store.getters.trainingToDisplay === this.trainings.length - 1
       }
     },
     methods: {
@@ -54,6 +62,12 @@
       },
       previousTraining () {
         this.$store.commit('PREVIOUS_TRAINING')
+      },
+      firstTraining () {
+        this.$store.commit('FIRST_TRAINING')
+      },
+      lastTraining () {
+        this.$store.commit('LAST_TRAINING')
       }
     }
   }
