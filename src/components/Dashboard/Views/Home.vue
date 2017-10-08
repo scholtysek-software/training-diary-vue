@@ -4,7 +4,7 @@
       <div class="col-md-4 col-md-offset-4" style="text-align: center;">
         <img src="static/img/if_push_up_829672.png" alt="main logo">
         <br/>
-        <button class="btn btn-lg btn-primary" style="opacity: 1">Create your first training
+        <button class="btn btn-lg btn-primary" @click="openTrainingModal()" style="opacity: 1">Create your first training
         </button>
       </div>
       <div class="col"></div>
@@ -24,6 +24,11 @@
      */
     data () {
       return {}
+    },
+    methods: {
+      openTrainingModal () {
+        this.$store.commit('OPEN_CREATE_TRAINING_MODAL')
+      }
     }
   }
 
