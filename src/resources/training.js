@@ -49,8 +49,28 @@ const addExercise = (exercise, training, token) => {
   })
 }
 
+const createSeries = (exercise, training, series, token) => {
+  return new Promise((resolve, reject) => {
+    axios({
+      url: `${url}/api/trainings/${training._id}/exercises/${exercise._id}/series`,
+      method: 'post',
+      headers: {
+        'x-auth': token
+      },
+      data: {
+        order: 1, // @todo: Get rid of it
+        repetition: series.reps,
+        load: series.weight
+      }
+    }).then((response) => {
+      resolve(response.data)
+    }).catch(error => reject(error))
+  })
+}
+
 export default {
   getTrainings,
   createTraining,
-  addExercise
+  addExercise,
+  createSeries
 }

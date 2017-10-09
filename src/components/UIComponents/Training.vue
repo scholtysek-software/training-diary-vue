@@ -3,15 +3,15 @@
     <div class="header">
       <slot name="header">
         <h4 class="title">{{ displayDate(training.date) }}</h4>
-        <p class="category">You are awesome</p>
       </slot>
     </div>
     <div class="content table-responsive table-full-width">
       <table class="table" :class="tableClass">
         <thead>
           <tr>
-            <th>Exercise</th>
+            <th></th>
             <th v-for="seriesNo in maxSeries">Series {{seriesNo}}</th>
+            <th><!-- Actions header --></th>
           </tr>
         </thead>
         <tbody>
@@ -26,40 +26,45 @@
               <i class="material-icons md-12" title="Weight">fitness_center</i>
               <span title="Weight">{{series.load}}</span>
             </td>
-            <td v-for="item in new Array(maxSeries.length - exercise.series.length)"> - </td>
-          </tr>
-          <tr>
-            <td v-for="item in new Array(maxSeries.length + 1)"></td>
+            <td>
+              <a href="#" @click.prevent="openSeriesModal(exercise)">
+                Add series
+              </a>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
+    <create-series :exercise="exercise"></create-series>
   </div>
 </template>
 <script>
   import moment from 'moment'
+  import CreateSeries from './CreateSeries.vue'
 
   export default {
+    components: {
+      CreateSeries
+    },
+    data () {
+      return {
+        exercise: {}
+      }
+    },
     props: {
-      columns: Array,
       training: Object,
       type: {
         type: String, // striped | hover
         default: 'Striped'
-      },
-      title: {
-        type: String,
-        default: ''
-      },
-      subTitle: {
-        type: String,
-        default: ''
-
       }
     },
     methods: {
       displayDate (timestamp) {
         return moment.unix(timestamp).format('LL')
+      },
+      openSeriesModal (exercise) {
+        this.exercise = exercise
+        this.$store.commit('OPEN_CREATE_SERIES_MODAL')
       }
     },
     computed: {
@@ -97,5 +102,9 @@
     opacity: 0.7;
     stroke: #777;
     stroke-width: 2px;
+  }
+
+  tbody tr {
+    border-top: 1px solid #CCC5B9;
   }
 </style>
