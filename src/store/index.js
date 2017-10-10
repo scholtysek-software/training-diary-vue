@@ -168,6 +168,19 @@ export default new Vuex.Store({
           .catch(error => reject(error))
       })
     },
+    setTraining ({ commit }, trainingId) {
+      return new Promise((resolve, reject) => {
+        const index = this.state.trainings.findIndex(t => t._id === trainingId)
+
+        if (index === -1) {
+          reject(new Error(`Cannot find training with ID: ${trainingId}`))
+          return
+        }
+
+        commit(types.TRAINING, this.state.trainings[index])
+        resolve()
+      })
+    },
     openCreateTrainingModal ({ commit }) {
       commit(types.OPEN_CREATE_TRAINING_MODAL)
     },

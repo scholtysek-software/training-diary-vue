@@ -93,19 +93,23 @@
           this.$refs.addSeriesModal.close()
         },
         createSeries () {
+          const trainingId = this.$store.getters.training._id
+
           this.$store.dispatch('createSeries', {
             exercise: this.exerciseComputed,
-            training: this.$store.getters.trainings[this.$store.getters.trainingToDisplay],
+            training: this.$store.getters.training,
             series: {
               weight: this.weight,
               reps: this.reps
             }
-          }).then((training) => {
-            this.$refs.addSeriesModal.close()
-            this.$refs.addSeriesSuccess.open()
+          }).then(() => this.$store.dispatch('getTrainings'))
+            .then(() => this.$store.dispatch('setTraining', trainingId))
+            .then(() => {
+              this.$refs.addSeriesModal.close()
+              this.$refs.addSeriesSuccess.open()
 
-            Promise.resolve()
-          })
+              Promise.resolve()
+            })
         },
         closeCreateSeriesWizard () {
           this.$refs.addSeriesSuccess.close()
