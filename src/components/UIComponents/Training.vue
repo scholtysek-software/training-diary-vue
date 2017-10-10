@@ -32,19 +32,29 @@
               </a>
             </td>
           </tr>
+          <tr>
+            <td>
+              <a href="#" @click.prevent="openExerciseModal()">
+                Add exercise
+              </a>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
     <create-series :exercise="exercise"></create-series>
+    <create-exercise></create-exercise>
   </div>
 </template>
 <script>
   import moment from 'moment'
   import CreateSeries from './CreateSeries.vue'
+  import CreateExercise from './CreateExercise.vue'
 
   export default {
     components: {
-      CreateSeries
+      CreateSeries,
+      CreateExercise
     },
     data () {
       return {
@@ -65,6 +75,9 @@
       openSeriesModal (exercise) {
         this.exercise = exercise
         this.$store.commit('OPEN_CREATE_SERIES_MODAL')
+      },
+      openExerciseModal () {
+        this.$store.commit('OPEN_CREATE_EXERCISE_MODAL')
       }
     },
     computed: {

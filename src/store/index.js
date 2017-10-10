@@ -33,7 +33,8 @@ export default new Vuex.Store({
     trainings: getTrainings(),
     training: {},
     isOpenCreateTrainingModal: false,
-    isOpenCreateSeriesModal: false
+    isOpenCreateSeriesModal: false,
+    isOpenCreateExerciseModal: false
   },
   mutations: {
     [types.LOGIN] (state) {
@@ -85,6 +86,12 @@ export default new Vuex.Store({
     },
     [types.CLOSE_CREATE_SERIES_MODAL] (state) {
       state.isOpenCreateSeriesModal = false
+    },
+    [types.OPEN_CREATE_EXERCISE_MODAL] (state) {
+      state.isOpenCreateExerciseModal = true
+    },
+    [types.CLOSE_CREATE_EXERCISE_MODAL] (state) {
+      state.isOpenCreateExerciseModal = false
     }
   },
   actions: {
@@ -192,6 +199,12 @@ export default new Vuex.Store({
     },
     closeCreateSeriesModal ({ commit }) {
       commit(types.CLOSE_CREATE_SERIES_MODAL)
+    },
+    openCreateExerciseModal ({ commit }) {
+      commit(types.OPEN_CREATE_EXERCISE_MODAL)
+    },
+    closeCreateExerciseModal ({ commit }) {
+      commit(types.CLOSE_CREATE_EXERCISE_MODAL)
     }
   },
   getters: {
@@ -215,6 +228,9 @@ export default new Vuex.Store({
     },
     isOpenCreateSeriesModal: state => {
       return state.isOpenCreateSeriesModal
+    },
+    isOpenCreateExerciseModal: state => {
+      return state.isOpenCreateExerciseModal
     }
   }
 })
