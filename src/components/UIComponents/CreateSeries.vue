@@ -1,6 +1,6 @@
 <template>
   <div>
-    <sweet-modal ref="addSeriesModal" class="create-series-form" title="New series">
+    <sweet-modal ref="addSeriesModal" class="create-series-form" title="Add series">
       <form action="#" method="#">
         <div class="container-fluid">
           <div class="row">
@@ -30,7 +30,7 @@
         </div>
         <div class="sweet-buttons">
           <button class="btn" @click.prevent="closeSeriesModal">Cancel</button>
-          <button class="btn btn-fill" @click.prevent="createSeries" :disabled="errors.has('weight') || errors.has('reps')">Create</button>
+          <button class="btn btn-fill" @click.prevent="createSeries" :disabled="errors.has('weight') || errors.has('reps') || !weight || !reps">Create</button>
         </div>
       </form>
     </sweet-modal>
