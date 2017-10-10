@@ -31,7 +31,7 @@ export default new Vuex.Store({
     token: localStorage.getItem('token'),
     user: getUser(),
     trainings: getTrainings(),
-    trainingToDisplay: 0,
+    training: {},
     isOpenCreateTrainingModal: false,
     isOpenCreateSeriesModal: false
   },
@@ -52,17 +52,27 @@ export default new Vuex.Store({
     [types.TRAININGS] (state, trainings) {
       state.trainings = trainings
     },
+    [types.TRAINING] (state, training) {
+      state.training = training
+    },
     [types.NEXT_TRAINING] (state) {
-      state.trainingToDisplay++
+      const trainingId = state.training._id
+      const index = state.trainings.findIndex(t => t._id === trainingId)
+
+      state.training = state.trainings[index + 1]
     },
     [types.PREVIOUS_TRAINING] (state) {
-      state.trainingToDisplay--
+      const trainingId = state.training._id
+      const index = state.trainings.findIndex(t => t._id === trainingId)
+
+      state.training = state.trainings[index - 1]
     },
     [types.FIRST_TRAINING] (state) {
-      state.trainingToDisplay = 0
+      state.training = state.trainings[0]
     },
     [types.LAST_TRAINING] (state) {
-      state.trainingToDisplay = state.trainings.length - 1
+      const lastIndex = state.trainings.length - 1
+      state.training = state.trainings[lastIndex]
     },
     [types.OPEN_CREATE_TRAINING_MODAL] (state) {
       state.isOpenCreateTrainingModal = true
@@ -127,6 +137,11 @@ export default new Vuex.Store({
           .then(trainings => {
             localStorage.setItem('trainings', JSON.stringify(trainings))
             commit(types.TRAININGS, trainings)
+
+            if (trainings.length) {
+              commit(types.TRAINING, trainings[0])
+            }
+
             resolve(trainings)
           })
           .catch(error => reject(error))
@@ -179,8 +194,8 @@ export default new Vuex.Store({
     trainings: state => {
       return state.trainings
     },
-    trainingToDisplay: state => {
-      return state.trainingToDisplay
+    training: state => {
+      return state.training
     },
     isOpenCreateTrainingModal: state => {
       return state.isOpenCreateTrainingModal

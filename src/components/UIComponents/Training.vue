@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="training._id">
     <div class="header">
       <slot name="header">
         <h4 class="title">{{ displayDate(training.date) }}</h4>

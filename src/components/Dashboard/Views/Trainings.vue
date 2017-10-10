@@ -11,7 +11,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="card" v-if="training">
-          <paper-table :training="training"></paper-table>
+          <training-table :training="training"></training-table>
         </div>
         <p class="text-info" v-if="!training">No trainings found</p>
       </div>
@@ -19,7 +19,7 @@
   </div>
 </template>
 <script>
-  import PaperTable from 'components/UIComponents/Training.vue'
+  import TrainingTable from 'components/UIComponents/Training.vue'
 
   export default {
     mounted: function () {
@@ -31,7 +31,7 @@
       this.$store.dispatch('getTrainings')
     },
     components: {
-      PaperTable
+      TrainingTable
     },
     data () {
       return {}
@@ -41,19 +41,22 @@
         return this.$store.getters.trainings
       },
       training () {
-        return this.trainings[this.$store.getters.trainingToDisplay]
+        return this.$store.getters.training
+      },
+      indexOfTraining () {
+        return this.trainings.findIndex(t => t._id === this.training._id)
       },
       hasPreviousTraining () {
-        return this.trainings[this.$store.getters.trainingToDisplay - 1] !== undefined
+        return this.indexOfTraining > 0
       },
       hasNextTraining () {
-        return this.trainings[this.$store.getters.trainingToDisplay + 1] !== undefined
+        return this.indexOfTraining < (this.trainings.length - 1)
       },
       isFirstTraining () {
-        return this.$store.getters.trainingToDisplay === 0
+        return this.indexOfTraining === 0
       },
       isLastTraining () {
-        return this.$store.getters.trainingToDisplay === this.trainings.length - 1
+        return this.indexOfTraining === (this.trainings.length - 1)
       }
     },
     methods: {
