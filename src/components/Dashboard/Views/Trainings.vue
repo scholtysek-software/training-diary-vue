@@ -1,10 +1,20 @@
 <template>
   <div>
     <div class="row trainings-nav">
-      <div class="col-md-12">
-        <button class="btn btn-fill" @click="firstTraining" :disabled="isFirstTraining">First</button>
+      <div class="col-md-4 col-xs-4">
         <button class="btn btn-fill" @click="previousTraining" :disabled="!hasPreviousTraining"><i class="ti-arrow-left"></i></button>
-        <button class="btn btn-fill pull-right" @click="lastTraining" :disabled="isLastTraining">Last</button>
+      </div>
+      <div class="col-md-4 col-xs-4 text-center">
+          <datepicker
+            class="form-group"
+            input-class="form-control border-input"
+            :value="date"
+            :disabled="disabledDates"
+            v-on:selected="onSelectedDate"
+            :format="'MMMM d, yyyy'"
+          ></datepicker>
+      </div>
+      <div class="col-md-4 col-xs-4 text-center">
         <button class="btn btn-fill pull-right" style="margin-right: 5px" @click="nextTraining" :disabled="!hasNextTraining"><i class="ti-arrow-right"></i></button>
       </div>
     </div>
@@ -20,6 +30,7 @@
 </template>
 <script>
   import TrainingTable from 'components/UIComponents/Training.vue'
+  import Datepicker from 'vuejs-datepicker'
 
   export default {
     mounted: function () {
@@ -31,7 +42,8 @@
       this.$store.dispatch('getTrainings')
     },
     components: {
-      TrainingTable
+      TrainingTable,
+      Datepicker
     },
     data () {
       return {}
@@ -46,17 +58,52 @@
       indexOfTraining () {
         return this.trainings.findIndex(t => t._id === this.training._id)
       },
+      lastTrainingIndex () {
+        return this.trainings.length - 1
+      },
       hasPreviousTraining () {
         return this.indexOfTraining > 0
       },
       hasNextTraining () {
         return this.indexOfTraining < (this.trainings.length - 1)
       },
-      isFirstTraining () {
-        return this.indexOfTraining === 0
+      date () {
+        if (this.training.date) {
+          const date = new Date(0)
+          date.setUTCSeconds(this.training.date)
+
+          return date
+        }
+
+        return new Date()
       },
-      isLastTraining () {
-        return this.indexOfTraining === (this.trainings.length - 1)
+      disabledDates () {
+        if (!this.trainings.length) {
+          return {}
+        }
+
+        const fromDate = new Date(0)
+        fromDate.setUTCSeconds(this.trainings[0].date)
+
+        const toDate = new Date(0)
+        toDate.setUTCSeconds(this.trainings[this.lastTrainingIndex].date)
+
+        const ranges = []
+        for (let i = this.lastTrainingIndex; i >= 1; i--) {
+          const rangeFrom = new Date(0)
+          rangeFrom.setUTCSeconds(this.trainings[i].date)
+
+          const rangeTo = new Date(0)
+          rangeTo.setUTCSeconds(this.trainings[i - 1].date)
+
+          ranges.push({ from: rangeFrom, to: rangeTo })
+        }
+
+        return {
+          to: toDate,
+          from: fromDate,
+          ranges
+        }
       }
     },
     methods: {
@@ -66,11 +113,8 @@
       previousTraining () {
         this.$store.commit('PREVIOUS_TRAINING')
       },
-      firstTraining () {
-        this.$store.commit('FIRST_TRAINING')
-      },
-      lastTraining () {
-        this.$store.commit('LAST_TRAINING')
+      onSelectedDate (date) {
+        this.$store.dispatch('setTrainingByDate', date.getTime() / 1000)
       }
     }
   }
@@ -79,5 +123,9 @@
 <style>
   .trainings-nav {
     margin-bottom: 20px;
+  }
+
+  .vdp-datepicker .form-control[readonly] {
+    cursor: pointer;
   }
 </style>

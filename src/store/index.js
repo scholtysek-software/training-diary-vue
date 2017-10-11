@@ -68,13 +68,6 @@ export default new Vuex.Store({
 
       state.training = state.trainings[index - 1]
     },
-    [types.FIRST_TRAINING] (state) {
-      state.training = state.trainings[0]
-    },
-    [types.LAST_TRAINING] (state) {
-      const lastIndex = state.trainings.length - 1
-      state.training = state.trainings[lastIndex]
-    },
     [types.OPEN_CREATE_TRAINING_MODAL] (state) {
       state.isOpenCreateTrainingModal = true
     },
@@ -181,6 +174,19 @@ export default new Vuex.Store({
 
         if (index === -1) {
           reject(new Error(`Cannot find training with ID: ${trainingId}`))
+          return
+        }
+
+        commit(types.TRAINING, this.state.trainings[index])
+        resolve()
+      })
+    },
+    setTrainingByDate ({ commit }, timestamp) {
+      return new Promise((resolve, reject) => {
+        const index = this.state.trainings.findIndex(t => t.date === timestamp)
+
+        if (index === -1) {
+          reject(new Error(`Cannot find training with timestamp: ${timestamp}`))
           return
         }
 
