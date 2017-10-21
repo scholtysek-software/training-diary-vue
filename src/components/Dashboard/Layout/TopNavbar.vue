@@ -33,7 +33,7 @@
             </a>
           </li>
           <drop-down :title="user.email" icon="ti-user" v-if="user">
-            <li @click.prevent="logout"><a href="#">Logout</a></li>
+            <li><a href="#" @click.prevent="logout">Logout</a></li>
           </drop-down>
         </ul>
       </div>
@@ -92,5 +92,7 @@
 
 </script>
 <style>
-
+  .dropdown-toggle {
+    cursor: pointer;
+  }
 </style>
