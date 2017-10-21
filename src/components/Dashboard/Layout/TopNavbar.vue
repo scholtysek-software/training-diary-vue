@@ -32,7 +32,7 @@
               <p>New training</p>
             </a>
           </li>
-          <drop-down :title="user.email" icon="ti-user" v-if="user">
+          <drop-down :title="username" icon="ti-user" v-if="user">
             <li><a href="#" @click.prevent="logout">Logout</a></li>
           </drop-down>
         </ul>
@@ -55,6 +55,11 @@
       },
       user () {
         return this.$store.getters.user
+      },
+      username () {
+        const username = this.user.email.split('@')
+
+        return username[0]
       }
     },
     data () {
@@ -94,5 +99,6 @@
 <style>
   .dropdown-toggle {
     cursor: pointer;
+    text-transform: capitalize;
   }
 </style>

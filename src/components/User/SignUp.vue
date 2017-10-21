@@ -106,10 +106,12 @@
           email: this.email,
           password: this.password
         }).then((user) => {
+          const username = user.email.split('@')[0]
+
           this.$notifications.notify(
             {
               id: Date.now(),
-              message: `Hi, ${user.email}`,
+              message: `Hi, ${username.charAt(0).toUpperCase() + username.slice(1)}`,
               horizontalAlign: 'center',
               verticalAlign: 'top',
               type: 'success'
