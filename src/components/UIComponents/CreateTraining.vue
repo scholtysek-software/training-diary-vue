@@ -11,6 +11,7 @@
                   class="form-group"
                   input-class="form-control border-input"
                   v-model="date"
+                  :disabled="disabledDates"
                   :format="'yyyy-MM-dd'"
                 ></datepicker>
                 <span v-show="errors.has('date')" class="text-danger">{{ errors.first('date') }}</span>
@@ -89,6 +90,9 @@
           this.shouldOpenCreateTrainingModal = this.$store.getters.isOpenCreateTrainingModal
 
           return this.$store.getters.isOpenCreateTrainingModal
+        },
+        disabledDates () {
+          return { from: new Date() }
         }
       },
       watch: {
