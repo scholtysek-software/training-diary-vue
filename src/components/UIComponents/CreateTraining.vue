@@ -5,13 +5,15 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12">
-              <div class="form-group">
-                <div class="col-md-12">
-                  <label for="form-date">Date</label>
-                  <input id="form-date" placeholder="Date" :class="{ 'form-control': true, 'input-no-border': true, 'is-error': errors.has('date') }"
-                         v-model="date" v-validate="'required|date_format:YYYY-MM-DD'" name="date">
-                  <span v-show="errors.has('date')" class="text-danger">{{ errors.first('date') }}</span>
-                </div>
+              <div class="col-md-12 col-xs-4">
+                <label for="form-date">Date</label>
+                <datepicker
+                  class="form-group"
+                  input-class="form-control border-input"
+                  v-model="date"
+                  :format="'yyyy-MM-dd'"
+                ></datepicker>
+                <span v-show="errors.has('date')" class="text-danger">{{ errors.first('date') }}</span>
               </div>
             </div>
           </div>
@@ -60,6 +62,7 @@
 </template>
 <script>
     import { SweetModal } from 'sweet-modal-vue'
+    import Datepicker from 'vuejs-datepicker'
 
     export default {
       mounted: function () {
@@ -69,7 +72,8 @@
         })
       },
       components: {
-        SweetModal
+        SweetModal,
+        Datepicker
       },
       data () {
         return {
@@ -103,7 +107,7 @@
           this.$refs.addTrainingModal.close()
         },
         createTraining () {
-          this.$store.dispatch('createTraining', this.date)
+          this.$store.dispatch('createTraining', `${this.date.getUTCFullYear()}-${this.date.getUTCMonth() + 1}-${this.date.getUTCDate()}`)
             .then((training) => {
               const promises = this.exercises.map((exercise, index) => this.$store.dispatch('addExercise', {
                 exercise: {
@@ -133,7 +137,6 @@
         closeCreateTrainingWizard () {
           this.$refs.addTrainingSuccess.close()
           this.$store.dispatch('getTrainings')
-            .then(() => this.$store.commit('LAST_TRAINING'))
           this.$router.push('/trainings')
         },
         clearFormData () {
@@ -180,5 +183,9 @@
 
   .create-training-form .row {
     margin-top: 10px;
+  }
+
+  .create-training-form div.sweet-content-content div.container-fluid {
+    min-height: 350px;
   }
 </style>
