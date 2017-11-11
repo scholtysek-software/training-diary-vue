@@ -69,7 +69,7 @@
               <div class="copyright">
                 &copy;
                 {{ year }}
-                <a href="https://www.scholtysek.pl">Scholtysek Software</a>, apps for everyone
+                <a href="https://www.scholtysek.pl" target="_blank">Scholtysek Software</a>, apps for everyone
               </div>
             </div>
           </footer>
